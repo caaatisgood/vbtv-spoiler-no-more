@@ -17,6 +17,8 @@ export class VBTVEnhancer implements PlayerShortcuts {
   private readonly VOLUMN_DELTA = 0.05;
   private readonly PLAYBACK_RATE_DELTA = 0.20;
   private readonly OBSERVER_TIMEOUT = 30000; // 30 seconds timeout
+  private readonly UI_ID = "vbtv-enhancer"
+  private readonly UI_PLAYBACK_RATE_ID = "playback-rate"
   private keydownListener: ((e: KeyboardEvent) => void) | null = null;
 
   constructor() {
@@ -33,6 +35,7 @@ export class VBTVEnhancer implements PlayerShortcuts {
       if (videoElement && !this.video) {
         this.video = videoElement;
         this.setupShortcuts();
+        this.renderUI();
         this.cleanupObserver();
         
         // Setup video removal detection
@@ -157,6 +160,7 @@ export class VBTVEnhancer implements PlayerShortcuts {
 
         // Playback controls
         case 'k':
+        case ' ':
           this.togglePlay();
           break;
         case '.':
@@ -206,9 +210,16 @@ export class VBTVEnhancer implements PlayerShortcuts {
     if (!this.video) return;
     const newRate = Math.max(
       this.MIN_PLAYBACK_RATE,
-      Math.min(this.MAX_PLAYBACK_RATE, this.video.playbackRate + delta)
+      Math.min(
+        this.MAX_PLAYBACK_RATE,
+        this.video.playbackRate + delta
+      )
     );
-    this.video.playbackRate = newRate;
+    log("rate", parseFloat(parseFloat((newRate).toString()).toPrecision(2)))
+    this.reactiveUpdate(function() {
+      this.video.playbackRate =
+        parseFloat(parseFloat((newRate).toString()).toPrecision(2));
+    })
   }
 
   public togglePlay(): void {
@@ -218,5 +229,48 @@ export class VBTVEnhancer implements PlayerShortcuts {
     } else {
       this.video.pause();
     }
+  }
+
+  private reactiveUpdate(func: Function | (() => void)): void {
+    func.bind(this)();
+    this.renderUI();
+  }
+
+  public renderUI(): void {
+    if (!this.video) {
+      return
+    }
+    let wrapper: HTMLDivElement = 
+      document.querySelector(`#${this.UI_ID}`) as HTMLDivElement
+    if (!wrapper) {
+      // create wrapper
+      wrapper = document.createElement('div')
+      wrapper.id = this.UI_ID
+      wrapper.style.display = 'flex'
+      wrapper.style.gap = '8px'
+      wrapper.style.position = 'fixed';
+      wrapper.style.top = '12px';
+      wrapper.style.right = '12px';
+      wrapper.style.zIndex = '1000';
+      // create playback rate label
+      const playback = document.createElement('div')
+      playback.id = this.UI_PLAYBACK_RATE_ID
+      playback.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+      playback.style.color = 'white';
+      playback.style.fontSize = '10px';
+      playback.style.padding = '4px 8px';
+      playback.style.borderRadius = '9999px';
+      // add playback to wrapper
+      wrapper.appendChild(playback)
+      // add wrapper to page
+      document.body.appendChild(wrapper);
+    }
+    this.renderPlaybackRate();
+  }
+
+  private renderPlaybackRate(): void {
+    const playback =
+      document.querySelector(`#${this.UI_ID} #${this.UI_PLAYBACK_RATE_ID}`) as HTMLDivElement;
+    playback.textContent = this.video?.playbackRate ? `${this.video?.playbackRate}x` : '';
   }
 }

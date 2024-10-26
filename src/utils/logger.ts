@@ -1,8 +1,6 @@
-const DEBUG = true
-
 export const log = (...args) => {
-  if (!DEBUG) {
-    return
+  if (!__DEBUG__) {
+    return;
   }
   console.log("[[[vbtv-done-right]]]", ...args)
 }

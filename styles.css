@@ -1,0 +1,14 @@
+/* hide runtime label on list view */
+.bg-runtime {
+  filter: blur(2.5px);
+}
+.bg-runtime:hover {
+  transition: filter 0.3s ease;
+  transition-delay: 500ms;
+  filter: blur(0);
+}
+
+/* hide vid control bar */
+.vjs-control-bar {
+  display: none !important;
+}

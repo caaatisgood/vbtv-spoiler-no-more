@@ -1,14 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "VBTV Player Enhancement",
+  "name": "VBTV spoiler no more",
   "version": "1.0",
-  "description": "Enhances VBTV player with YouTube-like shortcuts and interface modifications",
-  "permissions": ["activeTab", "scripting"],
+  "description": "Enhances VBTV watching experience",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "action": {
+    "default_popup": "src/index.html"
+  },
   "content_scripts": [
     {
       "matches": ["https://tv.volleyballworld.com/*"],
       "css": ["styles.css"],
-      "js": ["content.js"]
+      "js": ["src/content.ts"]
     }
   ],
   "icons": {

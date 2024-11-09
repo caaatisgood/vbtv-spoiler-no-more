@@ -2,23 +2,33 @@
   "name": "vbtv-spoiler-no-more",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
+    "dev": "NODE_ENV=development vite build --watch",
+    "build:vite": "vite build",
     "clean": "rimraf dist",
     "build:ts": "tsup ./content.ts",
-    "copy:static": "copyfiles -u 0 \"manifest.json\" \"styles.css\" \"icons/*\" dist",
-    "build": "pnpm run clean && pnpm run build:ts && pnpm run copy:static",
+    "build": "pnpm run clean && pnpm run build:vite",
     "zip": "bestzip extension.zip dist/*"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@crxjs/vite-plugin": "2.0.0-beta.28",
+    "@types/chrome": "^0.0.280",
     "@types/node": "^22.8.1",
     "bestzip": "^2.2.1",
-    "copyfiles": "^2.4.1",
     "rimraf": "^6.0.1",
+    "solid-devtools": "^0.30.1",
     "tsup": "^8.3.5",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vite-plugin-solid": "^2.10.2",
+    "vite-plugin-static-copy": "^2.1.0"
+  },
+  "dependencies": {
+    "@solidjs/router": "^0.15.1",
+    "solid-js": "^1.9.3"
   }
 }

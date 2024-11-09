@@ -4,11 +4,8 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development vite build --watch",
-    "build:vite": "vite build",
-    "clean": "rimraf dist",
-    "build:ts": "tsup ./content.ts",
-    "build": "pnpm run clean && pnpm run build:vite",
+    "dev": "vite dev",
+    "build": "vite build",
     "zip": "bestzip extension.zip dist/*"
   },
   "keywords": [],
@@ -19,9 +16,7 @@
     "@types/chrome": "^0.0.280",
     "@types/node": "^22.8.1",
     "bestzip": "^2.2.1",
-    "rimraf": "^6.0.1",
     "solid-devtools": "^0.30.1",
-    "tsup": "^8.3.5",
     "typescript": "^5.6.3",
     "vite": "^5.4.10",
     "vite-plugin-solid": "^2.10.2",

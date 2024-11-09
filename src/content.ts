@@ -26,3 +26,5 @@ if (window.location.pathname === PAGE_PATHS.PLAYER) {
 } else {
   log("Not the player page")
 }
+
+console.log("wtf")

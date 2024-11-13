@@ -4,11 +4,13 @@ import App from './App';
 
 export class Renderer {
   private rootId: string;
+  private dispose: () => void;
 
   constructor({ rootId }: {
     rootId: string;
   }) {
     this.rootId = rootId
+    this.dispose = () => {}
   }
 
   private getRoot() {
@@ -32,6 +34,12 @@ export class Renderer {
       );
     }
 
-    render(() => <Router root={App} />, root)
+    this.dispose = render(() => <Router root={App} />, root)
+  }
+
+  destroy() {
+    this.dispose()
+    const root = this.getRoot()
+    root.remove();
   }
 }

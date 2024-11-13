@@ -1,12 +1,16 @@
 import { log } from './logger'
 
+interface ElementObserverOptions {
+  selector: string;
+}
+
 export class ElementObserver {
   private observer: MutationObserver | null = null;
   private element: HTMLElement | null = null;
   private readonly OBSERVER_TIMEOUT = 30000; // 30 seconds timeout
   private readonly selector: string
 
-  constructor({ selector }) {
+  constructor({ selector }: ElementObserverOptions) {
     this.selector = selector
   }
 
@@ -18,7 +22,7 @@ export class ElementObserver {
     }, this.OBSERVER_TIMEOUT);
 
     this.observer = new MutationObserver(() => {
-      const element: HTMLElement = document.querySelector(this.selector);
+      const element: HTMLElement | null = document.querySelector(this.selector);
       if (element && !this.element) {
         callback(element)
         window.clearTimeout(timeoutId);

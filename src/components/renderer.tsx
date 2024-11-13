@@ -4,13 +4,13 @@ import App from './App';
 
 export class Renderer {
   private rootId: string;
-  private dispose: () => void;
+  private dispose: (() => void) | null;
 
   constructor({ rootId }: {
     rootId: string;
   }) {
     this.rootId = rootId
-    this.dispose = () => {}
+    this.dispose = null
   }
 
   private getRoot() {
@@ -26,6 +26,10 @@ export class Renderer {
   }
 
   render() {
+    if (this.dispose) {
+      return
+    }
+
     const root = this.getRoot()
     
     if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
@@ -38,7 +42,7 @@ export class Renderer {
   }
 
   destroy() {
-    this.dispose()
+    this.dispose?.()
     const root = this.getRoot()
     root.remove();
   }

@@ -2,7 +2,7 @@
 import { Renderer } from './components/renderer';
 import { log } from './utils/logger';
 import { ElementObserver } from './utils/elementObserver';
-import { PAGE_PATHS, VIDEO_SELECTOR } from './constants'
+import { PAGE_PATHS, ROOT_ID, VIDEO_SELECTOR } from './constants'
 import { observeRouteChange } from './utils/routeChangeObserver';
 
 log("🏐🏐🏐")
@@ -14,8 +14,7 @@ let cleanupRouteChangeObserver: ReturnType<typeof observeRouteChange>
 
 handleRouteChange(window.location.pathname)
 
-// if (window.navigation) {
-if (false) {
+if (window.navigation) {
   window.navigation.addEventListener("navigate", (event) => {
     const url = new URL(event.destination.url)
     console.log('[navigate] location changed!', url.pathname);
@@ -32,7 +31,6 @@ function handleRouteChange(pathname: string) {
   if (pathname === PAGE_PATHS.PLAYER) {
     observer = new ElementObserver({ selector: VIDEO_SELECTOR })
     observer.observe(() => {
-      log("Render root")
       renderer = createRenderer()
       renderer.render()
     })
@@ -43,7 +41,7 @@ function handleRouteChange(pathname: string) {
   }
 }
 
-const cleanupObserver = () => {
+function cleanupObserver() {
   log("cleanupObserver()")
   if (observer) {
     observer.cleanup()
@@ -51,7 +49,7 @@ const cleanupObserver = () => {
   }
 }
 
-const cleanupRenderer = () => {
+function cleanupRenderer() {
   log("cleanupRenderer()")
   if (renderer) {
     renderer.destroy()
@@ -59,10 +57,16 @@ const cleanupRenderer = () => {
   }
 }
 
-const createRenderer = () => {
-  return new Renderer({
-    rootId: "vbtv-spoiler-no-more"
+function createRenderer() {
+  log("createRenderer")
+  if (renderer) {
+    return renderer
+  }
+  log("create new renderer")
+  renderer = new Renderer({
+    rootId: ROOT_ID,
   })
+  return renderer
 }
 
 window.addEventListener('beforeunload', () => {

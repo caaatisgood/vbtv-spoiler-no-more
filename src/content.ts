@@ -18,7 +18,7 @@ await initializeSpoilerFreeState();
 function setupSpoilerFreeToggleListener() {
   chrome.runtime.onMessage.addListener((message) => {
     if (message.type === 'NO_SPOILER_TOGGLE_STATE_CHANGED') {
-      console.log('NO_SPOILER_TOGGLE_STATE_CHANGED', message.enabled)
+      log('NO_SPOILER_TOGGLE_STATE_CHANGED', message.enabled)
       handleNoSpoilerChange(message.enabled);
     }
   });

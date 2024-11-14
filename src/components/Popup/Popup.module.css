@@ -1,27 +1,54 @@
 /* src/Popup.module.css */
 .popup {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   padding: 1rem;
-  font-size: 0.75rem;
-  width: 300px;
+  font-size: 1rem;
+  width: 320px;
+}
+
+.popup p {
+  margin: 0;
 }
 
 .title {
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 1.25rem;
   margin: 0;
   margin-bottom: 1.25rem;
 }
 
+.toggleRow {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toggleRow p {
+  margin: 0;
+}
+
+.status {
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+}
+
+.status span {
+  font-size: 0.75rem;
+}
+
 .divider {
-  margin: 2rem 0 1rem 0;
+  margin: 1.5rem 0 1rem 0;
   border: none;
   border-style: unset;
   border-top: 1px solid #333;
 }
 
 .footer {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.75rem;
+  color: #9ca3af;
 }
 
 .footer a {
@@ -29,6 +56,6 @@
   text-decoration: underline;
 }
 
-.footer p {
-  margin-bottom: 0;
+.footer p + p {
+  margin-top: 0.25rem;
 }

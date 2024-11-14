@@ -33,7 +33,6 @@ export class VideoController implements PlayerShortcuts {
   }: VideoControllerOptions) {
     this.selector = selector
     this.handlers = handlers
-    // this.setupCleanup()
     this.getVideo()
     this.setupShortcuts()
   }
@@ -115,33 +114,6 @@ export class VideoController implements PlayerShortcuts {
         }
       });
     }
-  }
-
-  private setupCleanup(): void {
-    log("VideoController.setupCleanup()")
-    // Clean up when navigating away
-    window.addEventListener('beforeunload', () => this.cleanup());
-
-    // Handle single-page app navigation
-    window.addEventListener('popstate', () => this.cleanup());
-    
-    // Additional cleanup for single-page apps that might use pushState or replaceState
-    const originalPushState = window.history.pushState;
-    const originalReplaceState = window.history.replaceState;
-    window.history.pushState = function(...args) {
-      // Call original pushState
-      originalPushState.apply(this, args);
-      // Trigger cleanup
-      window.dispatchEvent(new Event('pushstate'));
-    };
-    window.history.replaceState = function(...args) {
-      // Call original replaceState
-      originalReplaceState.apply(this, args);
-      // Trigger cleanup
-      window.dispatchEvent(new Event('replacestate'));
-    };
-    window.addEventListener('pushstate', () => this.cleanup());
-    window.addEventListener('replacestate', () => this.cleanup());
   }
 
   public cleanup(): void {

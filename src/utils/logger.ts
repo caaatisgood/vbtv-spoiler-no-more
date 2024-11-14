@@ -1,4 +1,4 @@
-export const log = (...args) => {
+export const log = (...args: any[]) => {
   if (!__DEBUG__) {
     return;
   }

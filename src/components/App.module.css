@@ -1,4 +1,4 @@
-#vbtv-spoiler-no-more .wrapper {
+.wrapper {
   display: flex;
   gap: 8px;
   position: fixed;
@@ -14,12 +14,12 @@
   transition: opacity 0.1s 0s;
 }
 
-#vbtv-spoiler-no-more .wrapper.visible {
+.wrapper.visible {
   opacity: 1;
   transition: opacity 0.1s 0s;
 }
 
-#vbtv-spoiler-no-more .wrapper:not(.visible) {
+.wrapper:not(.visible) {
   transition: opacity 0.8s 0s;
   opacity: 0;
 }

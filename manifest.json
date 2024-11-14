@@ -10,7 +10,6 @@
   "content_scripts": [
     {
       "matches": ["https://tv.volleyballworld.com/*"],
-      "css": ["styles.css"],
       "js": ["src/content.ts"]
     }
   ],

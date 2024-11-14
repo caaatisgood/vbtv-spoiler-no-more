@@ -5,7 +5,7 @@ import { PAGE_PATHS, VIDEO_SELECTOR } from '../constants';
 import { log } from '../utils/logger';
 import { VideoController } from './VideoController';
 
-import './App.css'
+import styles from './App.module.css'
 
 const App: Component = () => {
   const [videoController, setVideoController] = createSignal<VideoController | null>(null)
@@ -62,8 +62,8 @@ const App: Component = () => {
   return (
     <Show when={!!videoController()}>
       <div classList={{
-        wrapper: true,
-        visible: visible(),
+        [styles.wrapper]: true,
+        [styles.visible]: visible(),
       }}>
         <div class="playback">{playbackRate() ? `${playbackRate()}x` : null}</div>
       </div>

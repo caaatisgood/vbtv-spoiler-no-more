@@ -4,38 +4,48 @@ import "./styles.css";
 import { Renderer } from './components/renderer';
 import { log } from './utils/logger';
 import { ElementObserver } from './utils/elementObserver';
-import { PAGE_PATHS, ROOT_ID, SPOILER_FREE_CLASS, SPOILER_FREE_STORAGE_KEY, VIDEO_SELECTOR } from './constants'
+import { PAGE_PATHS, ROOT_ID, 
+  NO_SPOILER_STORAGE_KEY,
+  WITH_SPOILER_CLASS,
+  VIDEO_SELECTOR } from './constants'
 import { observeRouteChange } from './utils/routeChangeObserver';
 
 log("🏐🏐🏐")
 
 setupSpoilerFreeToggleListener();
-initializeSpoilerFreeState();
+await initializeSpoilerFreeState();
 
 function setupSpoilerFreeToggleListener() {
   chrome.runtime.onMessage.addListener((message) => {
-    if (message.type === 'SPOILER_FREE_TOGGLE_STATE_CHANGED') {
-      handleSpoilerFreeToggleChange(message.enabled);
+    if (message.type === 'NO_SPOILER_TOGGLE_STATE_CHANGED') {
+      console.log('NO_SPOILER_TOGGLE_STATE_CHANGED', message.enabled)
+      handleNoSpoilerChange(message.enabled);
     }
   });
 };
 
-function handleSpoilerFreeToggleChange(enabled: boolean) {
-  if (enabled === false) {
-    document.body.classList.remove(SPOILER_FREE_CLASS);
+function handleNoSpoilerChange(noSpoiler: boolean) {
+  if (!noSpoiler) {
+    // add with spoiler class to enable spoiler styles
+    document.body.classList.add(WITH_SPOILER_CLASS);
   } else {
-    document.body.classList.add(SPOILER_FREE_CLASS);
+    // remove with spoiler class to enable NO spoiler styles
+    document.body.classList.remove(WITH_SPOILER_CLASS);
   }
 };
 
 // src/content/feature.ts
-function initializeSpoilerFreeState() {
+async function initializeSpoilerFreeState() {
   // Check initial state when content script loads
-  console.log("document.body", document.body)
-  document.body.classList.add(SPOILER_FREE_CLASS);
-
-  chrome.storage.local.get(SPOILER_FREE_STORAGE_KEY, (result) => {
-    handleSpoilerFreeToggleChange(result[SPOILER_FREE_STORAGE_KEY])
+  await chrome.storage.local.get([NO_SPOILER_STORAGE_KEY], (result) => {
+    const noSpoiler = result[NO_SPOILER_STORAGE_KEY] || false
+    log("initializeSpoilerFreeState noSpoiler", noSpoiler)
+    setTimeout(
+      () => handleNoSpoilerChange(noSpoiler),
+      noSpoiler === false
+        ? 400 // delay applying spoiler styles on initialization to wait for source rendering
+        : 0
+    )
   });
 };
 

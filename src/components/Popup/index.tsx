@@ -2,26 +2,28 @@
 import { createSignal, onMount } from 'solid-js';
 import { Switch } from '../Switch';
 import styles from './Popup.module.css';
-import { SPOILER_FREE_STORAGE_KEY } from '../../constants';
+import { NO_SPOILER_STORAGE_KEY } from '../../constants';
 
 const Popup = () => {
   const [isEnabled, setIsEnabled] = createSignal(true);
 
   onMount(async () => {
-    const result = await chrome.storage.local.get(SPOILER_FREE_STORAGE_KEY);
-    setIsEnabled(!!result[SPOILER_FREE_STORAGE_KEY]);
+    const result = await chrome.storage.local.get([NO_SPOILER_STORAGE_KEY]);
+    const noSpoiler = result[NO_SPOILER_STORAGE_KEY] ?? true
+    console.log("onMount noSpoiler", noSpoiler)
+    setIsEnabled(noSpoiler);
   });
 
-  const handleToggle = async (newState: boolean) => {
-    setIsEnabled(newState);
-    
-    await chrome.storage.local.set({ [SPOILER_FREE_STORAGE_KEY]: newState });
+  const handleToggle = async (isEnabled: boolean) => {
+    setIsEnabled(isEnabled);
+
+    await chrome.storage.local.set({ [NO_SPOILER_STORAGE_KEY]: isEnabled });
 
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (tab?.id) {
       chrome.tabs.sendMessage(tab.id, { 
-        type: 'SPOILER_FREE_TOGGLE_STATE_CHANGED',
-        enabled: newState 
+        type: 'NO_SPOILER_TOGGLE_STATE_CHANGED',
+        enabled: isEnabled,
       });
     }
   };

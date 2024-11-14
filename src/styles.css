@@ -1,9 +1,9 @@
 /* hide runtime label on list view */
-body.spoiler-free .bg-runtime {
+body:not(.with-spoiler) .bg-runtime {
   filter: blur(2.5px);
 }
 
 /* hide vid control bar */
-body.spoiler-free .vjs-control-bar {
+body:not(.with-spoiler) .vjs-control-bar {
   display: none !important;
 }

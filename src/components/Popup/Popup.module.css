@@ -32,6 +32,7 @@
   color: #9ca3af;
   display: flex;
   align-items: center;
+  font-size: 1.25rem;
 }
 
 .status span {

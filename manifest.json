@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "VBTV spoiler no more",
   "version": "1.0",
-  "description": "Enhances VBTV watching experience",
+  "description": "Spoiler-free VBTV watching experience. Navigate the video using your keyboard.",
   "permissions": ["activeTab", "scripting", "storage"],
   "action": {
     "default_popup": "src/index.html"

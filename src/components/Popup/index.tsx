@@ -21,7 +21,7 @@ const Popup = () => {
     await chrome.storage.local.set({ [NO_SPOILER_STORAGE_KEY]: isEnabled });
 
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (tab?.id) {
+    if (tab?.id && tab.url?.startsWith("https://tv.volleyballworld.com/")) {
       chrome.tabs.sendMessage(tab.id, { 
         type: 'NO_SPOILER_TOGGLE_STATE_CHANGED',
         enabled: isEnabled,

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "VBTV spoiler no more",
+  "name": "VBTV Spoiler No More",
   "version": "1.0",
   "description": "Spoiler-free VBTV watching experience. Navigate the video using your keyboard.",
   "permissions": ["activeTab", "storage"],

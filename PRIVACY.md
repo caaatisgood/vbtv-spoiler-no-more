@@ -1,8 +1,8 @@
-# Privacy Policy for VBTV Spoiler-Free Extension
+# Privacy Policy for VBTV Spoiler No More Extension
 
 ## Data Collection
 
-The VBTV Spoiler-Free extension does not collect, store, or transmit any personal data. The only data stored is your spoiler-free preference setting (enabled/disabled), which is saved locally in your browser using Chrome's storage API.
+The VBTV Spoiler No More extension does not collect, store, or transmit any personal data. The only data stored is your spoiler-free preference setting (enabled/disabled), which is saved locally in your browser using Chrome's storage API.
 
 ## Website Access
 
